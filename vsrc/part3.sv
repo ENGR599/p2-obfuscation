@@ -1,7 +1,8 @@
-module p3(
-	input [7:0] key,
-	input clk,
-	output wire [6:0] seg
+module part3(
+	input  clk,
+	input  rst,
+    input  [7:0] key,
+	output [6:0] seg
 );
 
 wire [6:0] z;
@@ -15,16 +16,20 @@ reg [3:0] hex_next = 0;
 reg [24:0] delay = 25'h0000000;
 reg on = 0;
 
-always @(posedge clk) begin
-   delay <= delay - 1'b1; 
-	if(delay == 25'hFFFFFFF) begin
-		on <= ~on;
-	end 
+always_ff @(posedge clk) begin
+    if (rst) begin
+        delay <= 25'h0;
+    end else begin
+       delay <= delay - 1'b1; 
+	   if(delay == 25'hFFFFFFF) begin
+	       on <= ~on;
+	   end
+    end 
 end
 
 hexto7segment h(.x(hex), .z(z));
 
-always@(*) begin
+always_comb begin
 	STATE_next = STATE;
 	hex_next   = hex;
 	case(STATE)
@@ -84,17 +89,17 @@ module hexto7segment(
     );
 always @(*) begin
 		case (x)
-			4'b0000: z = 7'b0111111; // "0"  
-			4'b0001: z = 7'b0000110; // "1" 
-			4'b0010: z = 7'b1011011; // "2" 
-			4'b0011: z = 7'b1001111; // "3" 
-			4'b0100: z = 7'b1100110; // "4" 
-			4'b0101: z = 7'b1101101; // "5" 
-			4'b0110: z = 7'b1111101; // "6" 
-			4'b0111: z = 7'b0000111; // "7" 
-			4'b1000: z = 7'b1111111; // "8"  
-			4'b1001: z = 7'b1101111; // "9" 
-			default: z = 7'b0111111; // "0"
+			4'b0000: z = 7'b0000001; // "0"  
+			4'b0001: z = 7'b1001111; // "1" 
+			4'b0010: z = 7'b0010010; // "2" 
+			4'b0011: z = 7'b0000110; // "3" 
+			4'b0100: z = 7'b1001100; // "4" 
+			4'b0101: z = 7'b0100100; // "5" 
+			4'b0110: z = 7'b0100000; // "6" 
+			4'b0111: z = 7'b0001111; // "7" 
+			4'b1000: z = 7'b0000000; // "8"  
+			4'b1001: z = 7'b0000100; // "9" 
+			default: z = 7'b0000001; // "0"
 		endcase
 end
  
