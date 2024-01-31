@@ -5,17 +5,23 @@ BASE_DIR 	:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 NUM_CORES 	:= 2
 
-vivado/vivado.xpr: tcl/setup.tcl
-	set -o pipefail && vivado -mode batch -source tcl/setup.tcl | tee setup.log	
-
 .PHONY:  setup
-setup:  vivado/vivado.xpr
+setup:  vivado_part2/vivado_part2.xpr vivado_part3/vivado_part3.xpr
 	python3 -m pip install pycryptodome --user
 	python3 -m pip install pyserial --user
 
+vivado_part2/vivado_part2.xpr: tcl/setup_part2.tcl
+	set -o pipefail && vivado -mode batch -source tcl/setup_part2.tcl | tee setup.log
+
+vivado_part3/vivado_part3.xpr: tcl/setup_part3.tcl
+	set -o pipefail && vivado -mode batch -source tcl/setup_part3.tcl | tee setup.log
+
 .PHONY: bitstream
-bitstream:  vivado/vivado.xpr tcl/impl.tcl 
-	set -o pipefail && vivado -mode batch -source tcl/impl.tcl -tclargs ${BASE_DIR} ${NUM_CORES}
+bitstream_part2:  vivado_part2/vivado_part2.xpr tcl/impl_part2.tcl
+	set -o pipefail && vivado -mode batch -source tcl/impl_part2.tcl -tclargs ${BASE_DIR} ${NUM_CORES}
+
+bitstream_part3:  vivado_part3/vivado_part3.xpr tcl/impl_part3.tcl
+	set -o pipefail && vivado -mode batch -source tcl/impl_part3.tcl -tclargs ${BASE_DIR} ${NUM_CORES}
 
 .PHONY: clean
 clean:
@@ -25,4 +31,5 @@ clean:
 	rm -rf output.txt
 	rm -rf *.bz2
 	rm -rf *.xpr *.sim *.runs *.hw *.cache *.ip_user_files 
-	rm -rf vivado 
+	rm -rf vivado_part2
+	rm -rf vivado_part3

@@ -8,7 +8,7 @@ if { $argc != 2 } {
     puts [ concat "BASE_PATH: " $BASE_PATH]
     puts [ concat "NUM_CORES: " $NUM_CORES]
 
-    open_project ${BASE_PATH}/vivado/vivado.xpr
+    open_project ${BASE_PATH}/vivado_part2/vivado_part2.xpr
     launch_runs impl_1 -to_step write_bitstream -jobs ${NUM_CORES}
     wait_on_run impl_1 
 }
