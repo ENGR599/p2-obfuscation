@@ -38,10 +38,10 @@ class UART:
 		return
 	
 if __name__ == '__main__':
-    ser = serial.Serial('/dev/ttyUSB1',115200, bytesize=8, parity='N', stopbits=1)	
+    ser = serial.Serial('/dev/ttyUSB1',115200, bytesize=8, parity='N', stopbits=1) #TODO Update with your tty device
 	
     uart_class = UART(serial_connection=ser, print_tx=True, print_rx=True)
-    uart_class.transaction(b'\x15')
+    uart_class.transaction(b'\x15') #TODO automate testing key bytes
 	
 
     uart_class.close_connection()

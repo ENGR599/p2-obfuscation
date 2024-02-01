@@ -6,7 +6,7 @@ module part3(
 );
 
 wire [6:0] z;
-assign seg = ~z;
+assign seg = z;
 
 reg [3:0] STATE = 0;
 reg [3:0] STATE_next = 0;
