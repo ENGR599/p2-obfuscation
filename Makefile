@@ -1,4 +1,5 @@
-SHELL 		:= /bin/bash
+SHELL 			:= /bin/bash
+BITSTREAM_PATH	:= part1_bitstreams/group0.bit #TODO change this line or set variable before make command.
 
 #https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile
 BASE_DIR 	:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -22,6 +23,9 @@ bitstream_part2:  vivado_part2/vivado_part2.xpr tcl/impl_part2.tcl
 
 bitstream_part3:  vivado_part3/vivado_part3.xpr tcl/impl_part3.tcl
 	set -o pipefail && vivado -mode batch -source tcl/impl_part3.tcl -tclargs ${BASE_DIR} ${NUM_CORES}
+
+flash:
+	set -o pipefail && vivado -mode batch -source tcl/flash.tcl -tclargs ${BITSTREAM_PATH}
 
 .PHONY: clean
 clean:
