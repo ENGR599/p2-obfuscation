@@ -47,6 +47,7 @@ $ python3 python/uart.py
 5. One way to attack combinational obfuscation is to simply try enough keys until we observe the circuit functions correctly.
 	- Carry out a brute-force attack on the obfuscated circuit by using the python script. 
     - Record the correct key for your report below
+
     | Group # | Key |
     | ------- | --- |
     |         |     |
