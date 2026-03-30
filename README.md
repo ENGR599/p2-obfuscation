@@ -1,7 +1,7 @@
 # ENGR 399/599 Lab 2: Obfuscation
 Adapted from Swarup Bhunia at the University of Florida. v2024.0
 
-<span style="color:red">Due: 11:59pm, Monday Mar. 10, 2024</span>
+<span style="color:red">Due: 11:59pm, Monday April 6, 2026</span>
 
 ## Overview
 
